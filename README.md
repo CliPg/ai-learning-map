@@ -52,11 +52,11 @@
 - Build a GPT
 - Finetune a model
 - Expert Iteration
-
+- MoE
 
 **Recommend:**
 - [CS336](https://stanford-cs336.github.io/spring2025/)
-
+- [My-Implementation](https://github.com/CliPg/CS336)
 
 ## Agent
 
