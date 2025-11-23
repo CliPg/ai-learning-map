@@ -17,9 +17,11 @@
 **You should master:**
 - Neural Network
 - Backward
+- pytorch
 
 **Recommend:**
 - [Coursea](https://www.coursera.org/specializations/deep-learning)
+- [pytorch](./pytorch/)
 
 
 ## NLP
