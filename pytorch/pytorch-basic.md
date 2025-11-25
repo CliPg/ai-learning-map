@@ -1,5 +1,6 @@
 # References
 - [动手学深度学习-李沐](https://www.bilibili.com/video/BV1f54ZzGEMC)
+- [cs224n-pytorch-tutorial](https://colab.research.google.com/drive/1Pz8b_h-W9zIBk1p2e6v-YFYThG1NkYeS?usp=sharing#scrollTo=Avy1fnyAvEcd)
 
 
 # Basic
@@ -177,3 +178,88 @@ x.grad的结果是tensor([1., 1., 1., 1.]),
 - 我们可以随机采样b个样本来近似损失,b表示批量大小
   - 批量太小，不适合并行来最大利用计算资源
   - 批量太大，内存消耗增加，浪费计算
+
+
+## softmax
+
+解决分类问题，将概率归一化
+
+```
+$$
+softmax(\mathbf{z})_{ij} = \frac{e^{z_{ij}}}{\sum_{k=1}^{q}e^{z_{ik}}}
+$$
+```
+
+## 感知机
+
+$$
+o = \sigma(\mathbf{w}^T\mathbf{x} + b) 
+$$
+
+$$
+\sigma(x) = \begin{cases} 1, x \geq 0 \\ 0, otherwise \end{cases}
+$$
+
+这是一个二分类。
+
+**训练感知机**
+```
+initialize w = 0 and b = 0
+repeat
+  # y_i 是真实值， w^Tx_i + b 是预测值，如果相乘为负，说明预测错误
+  if  y_i[w^Tx_i + b] <= 0 
+    w = w + x_i y_i
+    b = b + y_i
+until converged 
+```
+
+**xor问题**
+
+感知机不能拟合xor函数，只能产生线性分割面
+
+
+## 多层感知机
+
+e.g.
+
+1、4一类，2、3一类
+
+-------
+|   |  1 | 2 | 3 | 4 |
+|---|----|---|---|---|
+|   | +  | - | + | - |
+|   | +  | + | - | - |
+|product| +  | - | - | + |
+
+**单隐藏层**
+```py
+h = σ(XW1 + b1)
+o = hW2 + b2
+```
+这里的激活函数需要非线形的，如果为线形，则相当于单层感知机，无法拟合xor问题。
+
+**Sigmoid激活函数**
+$$
+sigmoid(x) = \frac{1}{1 + e^{-x}}
+$$
+将输入投影到(0,1)
+
+**Tanh激活函数**
+$$
+tanh(x) = \frac{e^x - e^{-x}}{e^x + e^{-x}}
+$$
+将输入投影到(-1,1)
+
+**ReLU激活函数**
+$$
+ReLU(x) = max(0,x)
+$$
+
+### 多类分类
+$$
+h = σ(XW_1 + b_1) \\
+o = hW_2 + b_2 \\
+y = softmax(o)
+$$
+
+多层感知机的本质就是构建多个隐藏层。

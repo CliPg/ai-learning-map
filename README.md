@@ -10,6 +10,7 @@
 - Logistic Model
 
 **Recommend:**
+- [动手学深度学习-李沐](https://www.bilibili.com/video/BV1f54ZzGEMC)
 - [Coursea](https://www.coursera.org/learn/machine-learning)
 
 ## Deep Learning
@@ -20,6 +21,7 @@
 - pytorch
 
 **Recommend:**
+- [动手学深度学习-李沐](https://www.bilibili.com/video/BV1f54ZzGEMC)
 - [Coursea](https://www.coursera.org/specializations/deep-learning)
 - [pytorch](./pytorch/)
 
