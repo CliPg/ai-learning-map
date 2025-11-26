@@ -1,7 +1,7 @@
 # References
 - [动手学深度学习-李沐](https://www.bilibili.com/video/BV1f54ZzGEMC)
 - [cs224n-pytorch-tutorial](https://colab.research.google.com/drive/1Pz8b_h-W9zIBk1p2e6v-YFYThG1NkYeS?usp=sharing#scrollTo=Avy1fnyAvEcd)
-
+- [d2l](https://zh.d2l.ai/chapter_preface/index.html#)
 
 # Basic
 
@@ -263,3 +263,91 @@ y = softmax(o)
 $$
 
 多层感知机的本质就是构建多个隐藏层。
+
+## 支持向量机
+
+SVM 的核心思想是寻找一个“间隔最大”（margin 最大）的超平面。它不仅要求把样本分开，还希望分类边界尽可能远离所有样本，通过最大化几何间隔来增强模型的泛化能力。SVM 只依赖少量靠近决策边界的样本（支持向量）进行决策，而且可以通过核函数技巧将数据映射到高维空间，从而处理非线性问题。
+
+
+## 权重衰退
+
+权重衰退（Weight Decay）是机器学习和深度学习中一种常用的正则化手段，它的核心思想是通过**惩罚模型中过大的权重**，来降低模型过拟合的风险，使模型变得更加“简单”且具有更好的泛化能力。
+
+在训练过程中，权重衰退会在损失函数中加入一个与权重大小相关的额外项，使模型倾向于学习较小的参数值。这样可以避免模型对训练数据“记太牢”，从而提升对新数据的表现。
+
+如果原始损失函数是
+$L(w)$
+
+加入权重衰退后就变成
+$$L(w) + \frac{\lambda}{2} \|w\|^2$$
+
+其中：
+	•	w：模型的权重参数
+	•	λ：权重衰退系数，越大表示惩罚越强
+	•	|w|²：权重向量的 L2 范数（平方和）
+
+因此，权重越大，惩罚越多，模型会倾向于保持权重小。
+
+**使用均方范数作为硬件限制**
+
+- 通过限制参数值的选择范围来控制模型容量
+- 通常不限制偏移b
+- 小的$\theta$ 意味着更强的正则项
+
+**使用均方范数作为硬件限制**
+
+- 对每个$\theta$，都可以找到$\lambda$使得之前都目标函数等价于
+
+$$
+min_\theta l(w,b) + \frac{\lambda}{2}||w||^2
+$$
+
+- 超参数$\lambda$控制来正则项都重要程度
+
+**参数更新法则**
+
+- 计算梯度
+  $$
+  \frac{\partial}{\partial w} (l(w,b) + \frac{\lambda}{2}||w||^2) = \frac{\partial l(w,b)}{\partial w} + \lambda w
+  $$
+- 更新参数
+  $$
+  w_{t+1} = w_t - \eta(\frac{\partial l(w,b)}{\partial w} + \lambda w_t) \\
+  = (1 - \eta \lambda)w_t - \eta \frac{\partial l(w,b)}{\partial w}
+  $$
+
+  通常$\eta \lambda < 1$, 在深度学习中通常叫做权重衰退
+
+
+## 丢弃法
+
+**无偏差的加入噪音**
+
+- 对x加入噪音得到x'，我们希望
+  $$
+  E[x'] = x
+  $$
+
+- 丢弃法对每个元素进行如下扰动
+  $$
+  x_j' = \begin{cases} 0, with \ probability \ p \\ \frac{x_j}{1-p}, otherwise \end{cases}
+  $$
+
+
+**使用丢弃法**
+
+通常将丢弃法作用在隐藏全连接层的输出上
+
+$$
+h = σ(XW_1 + b_1) \\
+h' = dropout(h) \\
+o = h'W_2 + b_2 \\
+y = softmax(o)
+$$
+
+正则项只在训练中使用，它们会影响模型参数的更新。在推理过程中，丢弃法直接返回输入。
+
+
+总而言之，dropout的目的是防止过拟合，通过训练时随机屏蔽部分神经元，让模型更稳健，只是一个训练技巧，不是模型结构的一部分。
+
+而在推理时，模型应该在相同输入下给出相同输出，如果eval时随机关掉神经元，会导致每次输出都不一样。因此不使用dropout。

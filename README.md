@@ -11,6 +11,7 @@
 
 **Recommend:**
 - [动手学深度学习-李沐](https://www.bilibili.com/video/BV1f54ZzGEMC)
+- [d2l](https://zh.d2l.ai/chapter_preface/index.html#)
 - [Coursea](https://www.coursera.org/learn/machine-learning)
 
 ## Deep Learning
@@ -22,6 +23,7 @@
 
 **Recommend:**
 - [动手学深度学习-李沐](https://www.bilibili.com/video/BV1f54ZzGEMC)
+- [d2l](https://zh.d2l.ai/chapter_preface/index.html#)
 - [Coursea](https://www.coursera.org/specializations/deep-learning)
 - [pytorch](./pytorch/)
 
@@ -57,8 +59,7 @@
 - MoE
 
 **Recommend:**
-- [CS336](https://stanford-cs336.github.io/spring2025/)
-- [My-Implementation](https://github.com/CliPg/CS336)
+- [CS336](https://github.com/CliPg/CS336)
 
 ## Agent
 
